@@ -15,6 +15,7 @@
     </style>
 </head>
 <body>
+    {% include 'navbar.html' %}
     <div class="container mb-4">
         <h1 class="text-center mt-2 mb-4">SCADA Technologies</h1>
         <img class="img-fluid" id="cover" src="/static/background.jpg">
@@ -33,10 +34,11 @@
                     {% include 'job-items.html' %}
                 {% endfor %}
             </div>
-            <div class="text-center">
+            <!-- <div class="text-center">
                 <button class="btn btn-primary btn-large">Contact Us</button>
-            </div>
+            </div> -->
         </div>
     </div>
+    {% include 'footer.html' %}
 </body>
 </html>
