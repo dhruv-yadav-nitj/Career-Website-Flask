@@ -18,7 +18,7 @@ with engine.connect() as conn:
 
     jobs = []
     for row in all_res:
-        jobs.append(row._mapping)  # found this type conversion in the comments section -> was earlier using dict(row)
+        jobs.append(row._mapping)  # found this type conversion somewhere -> was earlier using dict(row)
     print(jobs)
     
 '''
