@@ -1,6 +1,6 @@
 from flask import Flask, render_template, jsonify
 from livereload import Server
-from database import load_job_from_db
+from database import load_job_from_db, load_this_job
 
 
 app = Flask(__name__)
@@ -11,7 +11,16 @@ def home():
     return render_template('index.html', job_data=jobs)
 
 
-@app.route('/api/jobs')
+@app.route('/api/jobs')  # its standard to have json routing in this format '/api/route'
 def get_jobs():
     jobs = load_job_from_db()
     return jsonify(jobs)
+
+
+@app.route('/jobs/<id>')  # dynamic routing
+def get_this_job(id):
+    job = load_this_job(id)
+    if job is None:
+        return "Not Found", 404
+    else:
+        return render_template('jobpage.html', job=job)
