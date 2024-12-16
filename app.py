@@ -11,7 +11,7 @@ def home():
     return render_template('index.html', job_data=jobs)
 
 
-@app.route('/api/jobs')
+@app.route('/api/jobs')  # its standard to have json routing in this format '/api/route'
 def get_jobs():
     jobs = load_job_from_db()
     return jsonify(jobs)
