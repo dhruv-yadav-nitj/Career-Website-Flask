@@ -5,7 +5,7 @@ import os
 load_dotenv()
 conn_info = os.getenv("DATABASE_CONNECTION")
 
-engine = create_engine(conn_info)
+engine = create_engine(conn_info, echo=True)
 
 
 # --> testing purpose
@@ -41,3 +41,31 @@ def load_this_job(id):
             return None
         else:
             return (rows[0]._mapping)
+
+
+def send_data_db(id, data):
+    with engine.connect() as conn:
+        query = text(
+            """
+            INSERT INTO Applications (
+                job_id, first_name, last_name, email, phone, address1, city, state, zip, link
+            ) VALUES
+            (:job_id, :first_name, :last_name, :email, :phone, :add1, :city, :state, :zip, :resume);
+            """
+        )
+        
+        params = {
+            "job_id": id,
+            "first_name": data['firstname'],
+            "last_name": data['lastname'],
+            "email": data['email'],
+            "phone": str(data['phone']),
+            "add1": data['address1'],
+            "city": data['city'],
+            "state": data['state'],
+            "zip": data['zip'],
+            "resume": data['resumelink']
+        }
+        
+        conn.execute(query, params)
+        conn.commit()  # needed when we need to write new data to the database

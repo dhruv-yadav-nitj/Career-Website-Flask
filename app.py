@@ -1,6 +1,6 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 from livereload import Server
-from database import load_job_from_db, load_this_job
+from database import load_job_from_db, load_this_job, send_data_db
 
 
 app = Flask(__name__)
@@ -24,3 +24,15 @@ def get_this_job(id):
         return "Not Found", 404
     else:
         return render_template('jobpage.html', job=job)
+
+
+@app.route('/jobs/<id>/apply', methods=['POST'])
+def send_this_data(id):
+    data = request.form
+    # send this data to db
+    send_data_db(id, data)
+    # send email about application received using some api
+    '''will do later'''
+    # show application success message
+    return render_template('final.html')
+    # return jsonify(data)
