@@ -5,7 +5,7 @@ import os
 load_dotenv()
 conn_info = os.getenv("DATABASE_CONNECTION")
 
-engine = create_engine(conn_info, echo=True)
+engine = create_engine(conn_info)
 
 
 # --> testing purpose
@@ -69,3 +69,22 @@ def send_data_db(id, data):
         
         conn.execute(query, params)
         conn.commit()  # needed when we need to write new data to the database
+
+
+def load_applications_from_db(id):
+    query = text(
+        """
+        SELECT * FROM Applications
+        WHERE job_id = :id;
+        """
+    )
+    params = {'id' : id}
+    with engine.connect() as conn:
+        res = conn.execute(query, params)
+        data = res.all()
+        print(data)
+        applications = []
+        for row in data:
+            applications.append(dict(row._mapping))  # important type conversion -> spent much time on it! -> use docs to refer what each things return and in which format
+        return applications
+        

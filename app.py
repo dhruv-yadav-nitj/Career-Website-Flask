@@ -1,6 +1,6 @@
 from flask import Flask, render_template, jsonify, request
 from livereload import Server
-from database import load_job_from_db, load_this_job, send_data_db
+from database import load_job_from_db, load_this_job, send_data_db, load_applications_from_db
 
 
 app = Flask(__name__)
@@ -36,3 +36,9 @@ def send_this_data(id):
     # show application success message
     return render_template('final.html')
     # return jsonify(data)
+
+
+@app.route('/api/jobs/<id>')
+def jobs_api(id):
+    data = load_applications_from_db(id)
+    return data
