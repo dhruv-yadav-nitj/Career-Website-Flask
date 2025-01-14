@@ -3,12 +3,9 @@
         <div class="col-auto">
             <h4 style="color: rgb(120, 120, 120); margin-bottom: 2px;">{{job['title']}}</h4>
             <div><b>Location: </b>{{job['location']}}</div>  
-            <!-- {{variable}} it is used for rendering/output the variables in the final HTML -->
-            <!-- {%   %} is used for python like code in html templates -->
             {% if 'salary' in job %}
             <div><b>Salary: </b>{{job['salary']}} {{job['currency']}}</div>
             {% endif %}
-            <!-- we dont want to render job at this line so we have not used {{job}} in the loop statement -->
             {% if 'experience' in job %}
             <div><b>Experience: </b>{{job['experience']}}</div>
             {% endif %}
